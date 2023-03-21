@@ -1,10 +1,17 @@
 package com.example.facebook.user;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.stream.Collectors.*;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 
 import com.example.facebook.common.Id;
+import com.example.facebook.exception.NotFoundException;
+import com.example.facebook.user.connection.ConnectedUser;
+import com.example.facebook.user.connection.ConnectionsRepository;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,9 +20,15 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    private final ConnectionsRepository connectionsRepository;
+
+
+    public UserService(UserRepository userRepository,PasswordEncoder passwordEncoder,ConnectionsRepository connectionsRepository) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.connectionsRepository = connectionsRepository;
     }
 
     @Transactional
@@ -50,5 +63,29 @@ public class UserService {
         findById(userId).ifPresent(
             user -> user.updateProfileImage(profileImageUrl)
         );
+    }
+
+    @Transactional
+    public User login(Email email, String password) {
+        checkArgument(password != null, "password must be provided");
+
+        User user = findByEmail(email).orElseThrow(() -> new NotFoundException(User.class, email));
+        user.login(passwordEncoder,password);
+        return user;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Id<User, Long>> findConnectedIds(Id<User, Long> userId) {
+        checkArgument(userId != null , "id must be provided");
+
+        List<User> connectedUsers = connectionsRepository.findConnectedIds(userId.value());
+        return connectedUsers.stream().map(user-> Id.of(User.class,user.getSeq())).collect(toList());
+
+    }
+
+    @Transactional(readOnly = true)
+    public List<ConnectedUser> findAllConnectedUser(Id<User, Long> userId) {
+        checkArgument(userId != null , "id must be provided");
+        return connectionsRepository.findAllConnectedUser(userId);
     }
 }
