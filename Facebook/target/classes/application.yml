@@ -16,11 +16,18 @@ spring:
       minimum-idle: 1
       maximum-pool-size: 5
       pool-name: H2_DB
+  jpa:
+    defer-datasource-initialization: true
   sql:
     init:
       platform: h2
       schema-locations: classpath:schema-h2.sql
       data-locations: classpath:data-h2.sql
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    password: vRA3AY4apMyOfJ8EtJVX
 
 cloud:
   aws:
@@ -30,3 +37,10 @@ cloud:
       secretKey: rKZmN7F/ohDBiVhXWaJFapytbir6nc9oZYQ3GstV
       url: https://s3.ap-northeast-2.amazonaws.com
       bucketName: ssu-rental-bucket
+
+jwt:
+  token:
+    header: api_key
+    issuer: facebook
+    clientSecret: ENC(4A3olL6mZa+WwBbSd0IBUpiwjoQhC5s4wZcKWYsRzfPr5/KuHtgSwxafwdlVpTdXOxVuOB3a1iY=)
+    expirySeconds: 0

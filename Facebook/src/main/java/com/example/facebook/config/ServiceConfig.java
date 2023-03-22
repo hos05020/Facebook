@@ -6,7 +6,11 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.example.facebook.aws.S3Client;
+import com.example.facebook.security.Jwt;
 import com.example.facebook.utils.MessageUtils;
+import org.jasypt.encryption.StringEncryptor;
+import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
+import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +26,23 @@ public class ServiceConfig {
     }
 
     @Bean
+    public StringEncryptor jasyptStringEncryptor(JasyptConfigure jasyptConfigure) {
+        SimpleStringPBEConfig config = new SimpleStringPBEConfig();
+        config.setPassword(jasyptConfigure.getPassword());
+        config.setAlgorithm("PBEWithMD5AndDES");
+        config.setKeyObtentionIterations(1000);
+        config.setPoolSize(1);
+        config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
+        config.setStringOutputType("base64");
+        PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
+        encryptor.setConfig(config);
+        return encryptor;
+    }
+
+
+
+
+    @Bean
     public AmazonS3 amazonS3Client(AwsConfigure awsConfigure) {
         return AmazonS3ClientBuilder.standard()
             .withRegion(Regions.fromName(awsConfigure.getRegion()))
@@ -34,6 +55,12 @@ public class ServiceConfig {
             )
             .build();
     }
+
+    @Bean
+    public Jwt jwt(JwtTokenConfigure jwtTokenConfigure) {
+        return new Jwt(jwtTokenConfigure.getIssuer(), jwtTokenConfigure.getClientSecret(), jwtTokenConfigure.getExpirySeconds());
+    }
+
 
     @Bean
     public S3Client s3Client(AmazonS3 amazonS3, AwsConfigure awsConfigure) {
