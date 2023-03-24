@@ -77,9 +77,8 @@ public class UserService {
     @Transactional(readOnly = true)
     public List<Id<User, Long>> findConnectedIds(Id<User, Long> userId) {
         checkArgument(userId != null , "id must be provided");
-
-        List<User> connectedUsers = connectionsRepository.findConnectedIds(userId.value());
-        return connectedUsers.stream().map(user-> Id.of(User.class,user.getSeq())).collect(toList());
+        List<Long> connectedIds = connectionsRepository.findConnectedIds(userId);
+        return connectedIds.stream().map(connectedId-> Id.of(User.class,connectedId)).collect(toList());
 
     }
 

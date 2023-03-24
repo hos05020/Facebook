@@ -12,13 +12,21 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ConnectionsRepositoryImpl implements ConnectionsRepositoryCustom{
+public class ConnectionsRepositoryImpl implements ConnectionsRepositoryCustom {
 
 
     private final JPAQueryFactory jpaQueryFactory;
 
     public ConnectionsRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
         this.jpaQueryFactory = jpaQueryFactory;
+    }
+
+
+    @Override
+    public List<Long> findConnectedIds(Id<User, Long> userId) {
+        return jpaQueryFactory.select(connections.targetSeq.seq).from(connections).where(
+                connections.userSeq.seq.eq(userId.value()).and(connections.grantedAt.isNotNull()))
+            .orderBy(connections.targetSeq.seq.desc()).fetch();
     }
 
     @Override

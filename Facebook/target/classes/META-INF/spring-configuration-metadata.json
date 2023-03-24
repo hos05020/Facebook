@@ -55,7 +55,8 @@
     {
       "name": "jwt.token.expiry-seconds",
       "type": "java.lang.Integer",
-      "sourceType": "com.example.facebook.config.JwtTokenConfigure"
+      "sourceType": "com.example.facebook.config.JwtTokenConfigure",
+      "defaultValue": 0
     },
     {
       "name": "jwt.token.header",
