@@ -39,10 +39,9 @@ public class CommentService {
         return findPost(postId, postWriterId, userId)
             .map(post -> {
                 post.incrementAndGetComments();
-                postRepository.save(post);
-                User user = findUser(userId).orElseThrow(() -> new NotFoundException(User.class, userId));
-                Comment inserted =commentRepository.save(comment.newComment(user,post));
-                return inserted;
+                postRepository.update(post);
+                User user = findUser(userId);
+                return commentRepository.save(comment.newComment(user,post));
             })
             .orElseThrow(() -> new NotFoundException(Post.class, postId, userId));
     }
@@ -63,8 +62,8 @@ public class CommentService {
         return postRepository.findById(postId, postWriterId, userId);
     }
 
-    private Optional<User> findUser(Id<User,Long> userId){
-        return userRepository.findById(userId.value());
+    private User findUser(Id<User,Long> userId){
+        return userRepository.findById(userId.value()).orElseThrow(()->new NotFoundException(User.class,userId));
     }
 
 }

@@ -32,10 +32,9 @@ public class PostService {
 
     @Transactional
     public Post write(Id<User,Long> writerId,PostingRequest postingRequest) {
-        return findUser(writerId).map(user -> {
-            Post post = new Post(user, postingRequest.getContents());
-            return postRepository.save(post);
-        }).orElseThrow(()->new NotFoundException(User.class,writerId));
+        User user = findUser(writerId);
+        Post post =  new Post(user,postingRequest.getContents());
+        return postRepository.save(post);
     }
 
     @Transactional
@@ -43,9 +42,9 @@ public class PostService {
         return findById(postId, writerId, userId).map(post -> {
             if (!post.isLikesOfMe()) {
                 post.incrementAndGetLikes();
-                User user = findUser(userId).orElseThrow(() -> new NotFoundException(User.class, userId));
+                User user = findUser(userId);
                 likeRepository.save(new Like(user,post));
-                postRepository.save(post);
+                update(post);
             }
             return post;
         });
@@ -61,8 +60,8 @@ public class PostService {
         return postRepository.findById(postId, writerId, userId);
     }
 
-    private Optional<User> findUser(Id<User,Long> userId){
-        return userRepository.findById(userId.value());
+    private User findUser(Id<User,Long> userId){
+        return userRepository.findById(userId.value()).orElseThrow(()->new NotFoundException(User.class,userId));
     }
 
 
@@ -85,5 +84,9 @@ public class PostService {
 
     private int checkLimit(int limit) {
         return (limit < 1 || limit > 5) ? 5 : limit;
+    }
+
+    private void update(Post post) {
+        postRepository.update(post);
     }
 }

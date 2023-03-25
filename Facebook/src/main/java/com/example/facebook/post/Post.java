@@ -60,7 +60,6 @@ public class Post {
         this(null,user,contents,0,false,0,new Writer(user.getEmail(),user.getName()),null);
     }
 
-    @QueryProjection
     public Post(Post post,User user,boolean likesOfMe) {
         this(post.seq,user,post.getContents(),post.likes,likesOfMe,post.getComments(),new Writer(user.getEmail(),user.getName()),post.getCreateAt());
     }

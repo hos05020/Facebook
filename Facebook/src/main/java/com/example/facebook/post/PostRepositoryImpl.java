@@ -1,11 +1,14 @@
 package com.example.facebook.post;
 
+import static com.example.facebook.post.QPost.*;
 import static com.example.facebook.post.QPost.post;
 import static com.example.facebook.post.like.QLikes.likes;
 import static com.example.facebook.user.QUser.user;
+import static com.querydsl.core.types.ExpressionUtils.*;
 
 import com.example.facebook.common.Id;
 import com.example.facebook.user.User;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
@@ -23,8 +26,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     @Override
     public Optional<Post> findById(Id<Post, Long> postId, Id<User, Long> writerId,
         Id<User, Long> userId) {
-       Post findPost = jpaQueryFactory.select(
-                QPost.create(post,user,ExpressionUtils.as(likes.seq.isNotNull(),"likesOfMe")))
+        Post findPost = jpaQueryFactory.select(create(post, user, as(likes.seq.isNotNull(), "likesOfMe")))
             .from(post)
             .join(post.user, user)
             .leftJoin(likes)
@@ -38,7 +40,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     public List<PostDto> findAll(Id<User, Long> writerId, Id<User, Long> userId, long offset,
         int limit) {
         return jpaQueryFactory.select(
-                new QPostDto(post,user,ExpressionUtils.as(likes.seq.isNotNull(),"likesOfMe")))
+                new QPostDto(post, user, as(likes.seq.isNotNull(), "likesOfMe")))
             .from(post)
             .join(post.user, user)
             .leftJoin(likes)
@@ -48,5 +50,16 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
             .limit(limit)
             .fetch();
 
+    }
+
+
+    @Override
+    public void update(Post post) {
+        jpaQueryFactory.update(QPost.post)
+            .set(QPost.post.contents,post.getContents())
+            .set(QPost.post.likes,post.getLikes())
+            .set(QPost.post.comments,post.getComments())
+            .where(QPost.post.seq.eq(post.getSeq()))
+            .execute();
     }
 }
