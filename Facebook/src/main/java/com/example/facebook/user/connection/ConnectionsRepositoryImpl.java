@@ -26,19 +26,21 @@ public class ConnectionsRepositoryImpl implements ConnectionsRepositoryCustom {
     public List<Long> findConnectedIds(Id<User, Long> userId) {
         return jpaQueryFactory.select(connections.targetSeq.seq).from(connections).where(
                 connections.userSeq.seq.eq(userId.value()).and(connections.grantedAt.isNotNull()))
-            .orderBy(connections.targetSeq.seq.desc()).fetch();
+            .orderBy(connections.targetSeq.seq.desc())
+            .fetch();
+        //  리스트 조회, 데이터 없으면 빈 리스트 반환
     }
 
     @Override
-    public List<ConnectedUser> findAllConnectedUser(Id<User, Long> userId) {
-        List<Connections> connections = jpaQueryFactory.select(QConnections.connections).from(
-                QConnections.connections)
-            .join(QConnections.connections.targetSeq, user)
-            .where(
-                QConnections.connections.userSeq.seq.eq(userId.value()).and(
-                    QConnections.connections.grantedAt.isNotNull()))
-            .fetch();
+    public List<ConnectedUserDto> findAllConnectedUser(Id<User, Long> userId) {
 
-        return connections.stream().map(ConnectedUser::new).collect(toList());
+        return jpaQueryFactory.select(
+                new QConnectedUserDto(connections, connections.targetSeq))
+            .from(connections)
+            .join(connections.targetSeq, user)
+            .where(
+                connections.userSeq.seq.eq(userId.value()).and(
+                    connections.grantedAt.isNotNull()))
+            .fetch();         //  리스트 조회, 데이터 없으면 빈 리스트 반환
     }
 }

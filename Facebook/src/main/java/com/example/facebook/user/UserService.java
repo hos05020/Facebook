@@ -1,16 +1,15 @@
 package com.example.facebook.user;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 
 import com.example.facebook.common.Id;
 import com.example.facebook.exception.NotFoundException;
-import com.example.facebook.user.connection.ConnectedUser;
+import com.example.facebook.user.connection.ConnectedUserDto;
 import com.example.facebook.user.connection.ConnectionsRepository;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,7 +67,6 @@ public class UserService {
     @Transactional
     public User login(Email email, String password) {
         checkArgument(password != null, "password must be provided");
-
         User user = findByEmail(email).orElseThrow(() -> new NotFoundException(User.class, email));
         user.login(passwordEncoder,password);
         return user;
@@ -83,7 +81,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<ConnectedUser> findAllConnectedUser(Id<User, Long> userId) {
+    public List<ConnectedUserDto> findAllConnectedUser(Id<User, Long> userId) {
         checkArgument(userId != null , "id must be provided");
         return connectionsRepository.findAllConnectedUser(userId);
     }

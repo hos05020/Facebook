@@ -32,6 +32,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
             .leftJoin(likes)
             .on(likes.post.seq.eq(postId.value()).and(likes.user.seq.eq(userId.value())))
             .where(post.seq.eq(postId.value()).and(post.user.seq.eq(writerId.value()))).fetchOne();
+            //단 건 조회, 없으면  null 반환
 
         return Optional.ofNullable(findPost);
     }
@@ -48,7 +49,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
             .where(post.user.seq.eq(writerId.value())).orderBy(post.seq.desc())
             .offset(offset)
             .limit(limit)
-            .fetch();
+            .fetch(); //  리스트 조회, 데이터 없으면 빈 리스트 반환
 
     }
 

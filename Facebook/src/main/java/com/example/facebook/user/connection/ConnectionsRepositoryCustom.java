@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface ConnectionsRepositoryCustom {
 
-    List<ConnectedUser> findAllConnectedUser(Id<User,Long> userId);
+    List<ConnectedUserDto> findAllConnectedUser(Id<User,Long> userId);
 
     List<Long> findConnectedIds(Id<User,Long> userId);
 
