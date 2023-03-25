@@ -4,7 +4,6 @@ import static com.example.facebook.common.ApiResult.OK;
 import static com.example.facebook.common.AttachedFile.toAttachedFile;
 import static java.util.Optional.ofNullable;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
-import static java.util.stream.Collectors.toList;
 
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.example.facebook.aws.S3Client;
@@ -100,11 +99,7 @@ public class UserController {
 
     @GetMapping("user/connections")
     public ApiResult<List<ConnectedUserDto>> connections(@AuthenticationPrincipal JwtAuthentication authentication){
-        return OK(
-            userService.findAllConnectedUser(authentication.id).stream()
-                .map(ConnectedUserDto::new)
-                .collect(toList())
-        );
+        return OK(userService.findAllConnectedUser(authentication.id));
     }
 
 

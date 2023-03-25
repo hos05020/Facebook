@@ -27,5 +27,6 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom{
             .where(comment.post.seq.eq(postId.value()))
             .orderBy(comment.seq.desc())
             .fetch();
+        //  리스트 조회, 데이터 없으면 빈 리스트 반환
     }
 }

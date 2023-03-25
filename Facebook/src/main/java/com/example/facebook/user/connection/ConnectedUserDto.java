@@ -1,11 +1,13 @@
 package com.example.facebook.user.connection;
 
 import static java.util.Optional.ofNullable;
-import static org.springframework.beans.BeanUtils.copyProperties;
 
 
 import com.example.facebook.user.Email;
+import com.example.facebook.user.User;
+import com.querydsl.core.annotations.QueryProjection;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -18,52 +20,58 @@ public class ConnectedUserDto {
 
   private Email email;
 
-  private Optional<String> profileImageUrl;
+  private String profileImageUrl;
 
   private LocalDateTime grantedAt;
 
-  public ConnectedUserDto(ConnectedUser source) {
-    copyProperties(source, this);
+
+  @QueryProjection
+  public ConnectedUserDto(Connections connections,User user){
+    this.seq = user.getSeq();
+    this.name = user.getName();
+    this.email = user.getEmail();
+    this.profileImageUrl = user.getProfileImageUrl().orElse(null);
+    this.grantedAt = connections.getGrantedAt();
   }
 
   public Long getSeq() {
     return seq;
   }
 
-  public void setSeq(Long seq) {
-    this.seq = seq;
-  }
-
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public Email getEmail() {
     return email;
   }
 
-  public void setEmail(Email email) {
-    this.email = email;
-  }
 
   public Optional<String> getProfileImageUrl() {
-    return profileImageUrl;
+    return ofNullable(profileImageUrl);
   }
 
-  public void setProfileImageUrl(Optional<String> profileImageUrl) {
-    this.profileImageUrl = profileImageUrl;
-  }
 
   public LocalDateTime getGrantedAt() {
     return grantedAt;
   }
 
-  public void setGrantedAt(LocalDateTime grantedAt) {
-    this.grantedAt = grantedAt;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ConnectedUserDto that = (ConnectedUserDto) o;
+    return Objects.equals(getSeq(), that.getSeq());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getSeq());
   }
 
   @Override

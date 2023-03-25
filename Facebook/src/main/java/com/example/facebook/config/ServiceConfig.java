@@ -8,9 +8,18 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.example.facebook.aws.S3Client;
 import com.example.facebook.security.Jwt;
 import com.example.facebook.utils.MessageUtils;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -65,5 +74,21 @@ public class ServiceConfig {
     @Bean
     public S3Client s3Client(AmazonS3 amazonS3, AwsConfigure awsConfigure) {
         return new S3Client(amazonS3, awsConfigure.getUrl(), awsConfigure.getBucketName());
+    }
+
+    @Bean
+    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
+        // Jackson 설정 처리
+        return builder -> {
+            JavaTimeModule jtm = new JavaTimeModule();
+            jtm.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ISO_DATE_TIME));
+
+            builder.visibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
+            builder.visibility(PropertyAccessor.IS_GETTER, JsonAutoDetect.Visibility.NONE);
+            builder.visibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            builder.serializationInclusion(JsonInclude.Include.NON_NULL);
+            builder.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            builder.modulesToInstall(jtm);
+        };
     }
 }

@@ -2,7 +2,7 @@ com\example\facebook\config\AwsConfigure.class
 com\example\facebook\security\JwtAuthentication.class
 com\example\facebook\user\UserRepositoryCustom.class
 com\example\facebook\post\comment\Comment.class
-com\example\facebook\user\connection\ConnectedUser.class
+com\example\facebook\post\PostRepositoryImpl.class
 com\example\facebook\FacebookApplication.class
 com\example\facebook\user\Role.class
 com\example\facebook\user\UserRepository.class
@@ -50,6 +50,7 @@ com\example\facebook\post\Post.class
 com\example\facebook\post\PostDto.class
 com\example\facebook\security\JwtAuthenticationTokenFilter.class
 com\example\facebook\exception\NotFoundException.class
+com\example\facebook\user\connection\QConnectedUserDto.class
 com\example\facebook\post\comment\QComment.class
 com\example\facebook\config\WebSecurityConfigure.class
 com\example\facebook\post\PostingRequest.class
