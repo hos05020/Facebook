@@ -22,9 +22,9 @@
     
       * Post 테이블에서 Like 테이블(유저 정보와 유가 좋아요 누른 게시글 정보가 담긴 테이블) 을 Left JOIN 처리한 이후 반환하여, Post 객체에서 로그인 유저의 게시글 좋아요 여부 파악 가능(Post 테이블에는 좋아요를 눌렀는지에 대한 칼럼 존재X)
 
-    * 게시글에 댓글을 남기면, 게시글 작성자에게 알람 기능
+    * 게시글에 댓글을 남기면, 게시글 작성자에게 알람 기능 `(추후 구현)`
 
-       * 댓글을 작성하면, 이벤트가 발생하고, 이러한 이벤트를 받은 EventBus가 이벤트 종류에 따라 Kafka에게 다른 메세지를 전송 -> Kafka에서 메세지을 확인 후  게시글 작성자가 알람을 구독중이라면, 알람 전송
+       * 댓글을 작성하면, 이벤트가 발생하고, 이러한 이벤트를 받은 EventBus가 이벤트 종류에 따라 Kafka에게 다른 메세지를 전송 -> Kafka에서 메세지을 확인 후  게시글 작성자가 알람을 구독중이라면, 알람 전송 `(추후 구현)`
       
       
       
@@ -32,4 +32,6 @@
       
 * Tech Stack
 
-  * Spring Boot, H2-Console, Spring Data JPA, QueryDSL
+  * Spring Boot, Spring Security(+ JWT), Spring Data JPA, QueryDSL, Kafka
+  
+  * DataBase : H2-Console
