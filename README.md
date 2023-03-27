@@ -32,6 +32,6 @@
       
 * Tech Stack
 
-  * Spring Boot, Spring Security(+ JWT), Spring Data JPA, QueryDSL, Kafka
+  * Back-End : Spring Boot, Spring Security(+ JWT), Spring Data JPA, QueryDSL, Kafka
   
   * DataBase : H2-Console
