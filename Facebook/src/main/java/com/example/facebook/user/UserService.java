@@ -5,9 +5,11 @@ import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 
 import com.example.facebook.common.Id;
+import com.example.facebook.event.JoinEvent;
 import com.example.facebook.exception.NotFoundException;
 import com.example.facebook.user.connection.ConnectedUserDto;
 import com.example.facebook.user.connection.ConnectionsRepository;
+import com.google.common.eventbus.EventBus;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,11 +25,14 @@ public class UserService {
 
     private final ConnectionsRepository connectionsRepository;
 
+    private final EventBus eventBus;
 
-    public UserService(UserRepository userRepository,PasswordEncoder passwordEncoder,ConnectionsRepository connectionsRepository) {
+
+    public UserService(UserRepository userRepository,PasswordEncoder passwordEncoder,ConnectionsRepository connectionsRepository,EventBus eventBus) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.connectionsRepository = connectionsRepository;
+        this.eventBus = eventBus;
     }
 
     @Transactional
@@ -36,7 +41,9 @@ public class UserService {
         checkArgument(password.length() >=4 && password.length() <= 15, "password must be between 4 and 15 characters");
 
         User user = new User(name,email,password);
-        return insert(user);
+        User saved= insert(user);
+        eventBus.post(new JoinEvent(saved));
+        return saved;
     }
 
     @Transactional(readOnly = true)
