@@ -1,4 +1,4 @@
-package com.example.facebook.message;
+package com.example.facebook.user;
 
 import com.example.facebook.event.JoinEvent;
 import org.apache.commons.lang3.builder.ToStringBuilder;

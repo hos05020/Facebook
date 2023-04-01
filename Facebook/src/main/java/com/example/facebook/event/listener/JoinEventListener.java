@@ -2,7 +2,7 @@ package com.example.facebook.event.listener;
 
 
 import com.example.facebook.event.JoinEvent;
-import com.example.facebook.message.UserJoinedMessage;
+import com.example.facebook.user.UserJoinedMessage;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import org.slf4j.Logger;

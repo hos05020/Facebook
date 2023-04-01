@@ -3,7 +3,7 @@ package com.example.facebook.event.listener;
 
 import com.example.facebook.common.Id;
 import com.example.facebook.event.CommentCreatedEvent;
-import com.example.facebook.message.CommentCreatedMessage;
+import com.example.facebook.post.comment.CommentCreatedMessage;
 import com.example.facebook.post.Post;
 import com.example.facebook.post.PostService;
 import com.example.facebook.user.User;

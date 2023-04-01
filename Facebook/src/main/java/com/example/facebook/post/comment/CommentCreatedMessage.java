@@ -1,4 +1,4 @@
-package com.example.facebook.message;
+package com.example.facebook.post.comment;
 
 
 import com.example.facebook.event.CommentCreatedEvent;

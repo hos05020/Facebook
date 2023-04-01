@@ -1,4 +1,4 @@
-package com.example.facebook.message;
+package com.example.facebook.notification;
 
 import static java.time.LocalDateTime.now;
 import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
