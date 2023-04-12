@@ -4,11 +4,13 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Collections.emptyList;
 
 import com.example.facebook.common.Id;
+import com.example.facebook.event.CommentCreatedEvent;
 import com.example.facebook.exception.NotFoundException;
 import com.example.facebook.post.Post;
 import com.example.facebook.post.PostRepository;
 import com.example.facebook.user.User;
 import com.example.facebook.user.UserRepository;
+import com.google.common.eventbus.EventBus;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -23,11 +25,14 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
+    private final EventBus eventBus;
+
     public CommentService(PostRepository postRepository, UserRepository userRepository,
-        CommentRepository commentRepository) {
+        CommentRepository commentRepository,EventBus eventBus) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.commentRepository = commentRepository;
+        this.eventBus = eventBus;
     }
 
     @Transactional
@@ -41,7 +46,9 @@ public class CommentService {
                 post.incrementAndGetComments();
                 postRepository.update(post);
                 User user = findUser(userId);
-                return commentRepository.save(comment.newComment(user,post));
+                Comment inserted = commentRepository.save(comment.newComment(user,post));
+                eventBus.post(new CommentCreatedEvent(inserted));
+                return inserted;
             })
             .orElseThrow(() -> new NotFoundException(Post.class, postId, userId));
     }

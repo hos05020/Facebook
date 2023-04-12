@@ -26,13 +26,14 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     @Override
     public Optional<Post> findById(Id<Post, Long> postId, Id<User, Long> writerId,
         Id<User, Long> userId) {
-        Post findPost = jpaQueryFactory.select(create(post, user, as(likes.seq.isNotNull(), "likesOfMe")))
+        Post findPost = jpaQueryFactory.select(
+                create(post, user, as(likes.seq.isNotNull(), "likesOfMe")))
             .from(post)
             .join(post.user, user)
             .leftJoin(likes)
             .on(likes.post.seq.eq(postId.value()).and(likes.user.seq.eq(userId.value())))
             .where(post.seq.eq(postId.value()).and(post.user.seq.eq(writerId.value()))).fetchOne();
-            //단 건 조회, 없으면  null 반환
+        //단 건 조회, 없으면  null 반환
 
         return Optional.ofNullable(findPost);
     }
@@ -53,13 +54,18 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
 
     }
 
+    @Override
+    public Optional<User> findWriter(Id<Post, Long> postId) {
+        return Optional.ofNullable(jpaQueryFactory.select(post.user).from(post).join(post.user, user)
+            .where(post.seq.eq(postId.value())).fetchOne());
+    }
 
     @Override
     public void update(Post post) {
         jpaQueryFactory.update(QPost.post)
-            .set(QPost.post.contents,post.getContents())
-            .set(QPost.post.likes,post.getLikes())
-            .set(QPost.post.comments,post.getComments())
+            .set(QPost.post.contents, post.getContents())
+            .set(QPost.post.likes, post.getLikes())
+            .set(QPost.post.comments, post.getComments())
             .where(QPost.post.seq.eq(post.getSeq()))
             .execute();
     }

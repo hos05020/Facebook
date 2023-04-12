@@ -78,6 +78,12 @@ public class PostService {
 
     }
 
+    @Transactional(readOnly = true)
+    public Optional<User> findWriter(Id<Post, Long> postId) {
+        checkArgument(postId!=null,"postId must be provided");
+        return postRepository.findWriter(postId);
+    }
+
     private long checkOffset(long offset) {
         return offset < 0 ? 0 : offset;
     }
@@ -89,4 +95,6 @@ public class PostService {
     private void update(Post post) {
         postRepository.update(post);
     }
+
+
 }
