@@ -1,6 +1,6 @@
 spring:
   application:
-    name: social_server
+    name: facebook_server
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -21,6 +21,8 @@ spring:
       minimum-idle: 1
       maximum-pool-size: 5
       pool-name: H2_DB
+  jpa:
+    defer-datasource-initialization: true
   sql:
     init:
       platform: h2
@@ -54,10 +56,10 @@ cloud:
   aws:
     s3:
       region: ap-northeast-2
-      accessKey: ENC(TbShCuvx2ak8QrNuzEGopBYod2D4uMk5YRTRBNnz67w=)
-      secretKey: ENC(nOr+oy1LwJ3S8lMAWRSfarjVOtffZ6gkntGmOi/q/fCTLLS9ei0b9lx1e9FTTcilY1hLKfvju/g=)
+      accessKey: AKIATLEO2CZ4VTPQB4W7
+      secretKey: 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
       url: https://s3.ap-northeast-2.amazonaws.com
-      bucketName: prgrms-web-bjs
+      bucketName: ssu-rental-bucket
 eventbus:
   asyncPoolCore: 1
   asyncPoolMax: 4

@@ -1,9 +1,8 @@
 package com.example.facebookapiserver.config;
-
-import com.example.facebook.event.EventExceptionHandler;
-import com.example.facebook.event.listener.CommentCreateEventLister;
-import com.example.facebook.event.listener.JoinEventListener;
-import com.example.facebook.post.PostService;
+import com.example.facebookapiserver.event.EventExceptionHandler;
+import com.example.facebookapiserver.event.listener.CommentCreateEventLister;
+import com.example.facebookapiserver.event.listener.JoinEventListener;
+import com.example.facebookapiserver.service.post.PostService;
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
 import org.springframework.boot.context.properties.ConfigurationProperties;

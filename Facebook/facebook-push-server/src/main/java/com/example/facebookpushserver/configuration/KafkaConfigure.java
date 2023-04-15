@@ -1,9 +1,7 @@
 package com.example.facebookpushserver.configuration;
 
-
-
-import com.example.facebookapiserver.notification.PushSubscribedMessage;
-import com.example.facebookapiserver.user.UserJoinedMessage;
+import com.example.facebookapiserver.message.PushSubscribedMessage;
+import com.example.facebookapiserver.message.UserJoinedMessage;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;

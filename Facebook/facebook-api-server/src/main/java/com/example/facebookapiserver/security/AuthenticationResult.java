@@ -2,7 +2,7 @@ package com.example.facebookapiserver.security;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-import com.example.facebook.user.User;
+import com.example.facebookapiserver.domain.user.User;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

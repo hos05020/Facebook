@@ -1,7 +1,6 @@
 package com.example.facebookapiserver.exception;
 
-
-import com.example.facebook.utils.MessageUtils;
+import com.example.facebookapiserver.utils.MessageUtils;
 
 public class UnauthorizedException extends ServiceRuntimeException {
 

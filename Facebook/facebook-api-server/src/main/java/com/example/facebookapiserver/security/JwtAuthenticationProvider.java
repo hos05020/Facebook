@@ -1,12 +1,13 @@
 package com.example.facebookapiserver.security;
 
 import static org.apache.commons.lang3.ClassUtils.isAssignable;
+import static org.springframework.security.core.authority.AuthorityUtils.createAuthorityList;
 
-import com.example.facebook.exception.NotFoundException;
-import com.example.facebook.user.Email;
-import com.example.facebook.user.Role;
-import com.example.facebook.user.User;
-import com.example.facebook.user.UserService;
+import com.example.facebookapiserver.exception.NotFoundException;
+import com.example.facebookapiserver.domain.user.Email;
+import com.example.facebookapiserver.domain.user.Role;
+import com.example.facebookapiserver.domain.user.User;
+import com.example.facebookapiserver.service.user.UserService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;

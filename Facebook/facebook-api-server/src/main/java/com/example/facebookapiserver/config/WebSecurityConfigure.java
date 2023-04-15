@@ -2,16 +2,16 @@ package com.example.facebookapiserver.config;
 
 import static org.apache.commons.lang3.math.NumberUtils.toLong;
 
-import com.example.facebook.common.Id;
-import com.example.facebook.security.ConnectionBasedVoter;
-import com.example.facebook.security.EntryPointUnauthorizedHandler;
-import com.example.facebook.security.Jwt;
-import com.example.facebook.security.JwtAccessDeniedHandler;
-import com.example.facebook.security.JwtAuthenticationProvider;
-import com.example.facebook.security.JwtAuthenticationTokenFilter;
-import com.example.facebook.user.Role;
-import com.example.facebook.user.User;
-import com.example.facebook.user.UserService;
+import com.example.facebookapiserver.domain.common.Id;
+import com.example.facebookapiserver.security.ConnectionBasedVoter;
+import com.example.facebookapiserver.security.EntryPointUnauthorizedHandler;
+import com.example.facebookapiserver.security.Jwt;
+import com.example.facebookapiserver.security.JwtAccessDeniedHandler;
+import com.example.facebookapiserver.security.JwtAuthenticationProvider;
+import com.example.facebookapiserver.security.JwtAuthenticationTokenFilter;
+import com.example.facebookapiserver.domain.user.Role;
+import com.example.facebookapiserver.domain.user.User;
+import com.example.facebookapiserver.service.user.UserService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;

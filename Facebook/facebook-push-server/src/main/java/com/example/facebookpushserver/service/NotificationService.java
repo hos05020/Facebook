@@ -1,10 +1,10 @@
 package com.example.facebookpushserver.service;
 
-import com.example.facebookapiserver.common.Id;
-import com.example.facebookapiserver.notification.Subscription;
-import com.example.facebookapiserver.notification.SubscriptionRepository;
-import com.example.facebookapiserver.user.User;
+import com.example.facebookapiserver.domain.common.Id;
+import com.example.facebookapiserver.domain.user.User;
 import com.example.facebookpushserver.domain.PushMessage;
+import com.example.facebookpushserver.domain.Subscription;
+import com.example.facebookpushserver.repository.SubscriptionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import java.util.Optional;

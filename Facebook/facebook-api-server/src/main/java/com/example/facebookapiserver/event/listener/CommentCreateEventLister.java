@@ -1,13 +1,11 @@
 package com.example.facebookapiserver.event.listener;
-
-
-import com.example.facebook.common.Id;
-import com.example.facebook.event.CommentCreatedEvent;
-import com.example.facebook.post.Post;
-import com.example.facebook.post.PostService;
-import com.example.facebook.post.comment.CommentCreatedMessage;
-import com.example.facebook.user.User;
-import com.example.facebook.user.UserDto;
+import com.example.facebookapiserver.domain.common.Id;
+import com.example.facebookapiserver.event.CommentCreatedEvent;
+import com.example.facebookapiserver.domain.post.Post;
+import com.example.facebookapiserver.service.post.PostService;
+import com.example.facebookapiserver.message.CommentCreatedMessage;
+import com.example.facebookapiserver.domain.user.User;
+import com.example.facebookapiserver.controller.user.UserDto;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import org.slf4j.Logger;

@@ -1,8 +1,8 @@
 package com.example.facebookapiserver.security;
 
-import static com.example.facebook.common.ApiResult.ERROR;
+import static com.example.facebookapiserver.controller.ApiResult.ERROR;
 
-import com.example.facebook.common.ApiResult;
+import com.example.facebookapiserver.controller.ApiResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import javax.servlet.ServletException;

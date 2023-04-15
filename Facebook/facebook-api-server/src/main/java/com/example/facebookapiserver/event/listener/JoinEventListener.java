@@ -1,8 +1,6 @@
 package com.example.facebookapiserver.event.listener;
-
-
-import com.example.facebook.event.JoinEvent;
-import com.example.facebook.user.UserJoinedMessage;
+import com.example.facebookapiserver.event.UserJoinedEvent;
+import com.example.facebookapiserver.message.UserJoinedMessage;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import org.slf4j.Logger;
@@ -29,7 +27,7 @@ public class JoinEventListener implements AutoCloseable {
   }
 
   @Subscribe
-  public void handleJoinEvent(JoinEvent event) {
+  public void handleJoinEvent(UserJoinedEvent event) {
     UserJoinedMessage userJoinedMessage = new UserJoinedMessage(event);
     log.info("try to send push userJoinedmessage:{}",userJoinedMessage);
     this.kafkaTemplate.send(userJoinedTopic,userJoinedMessage);

@@ -1,12 +1,13 @@
 package com.example.facebookpushserver.subscriber;
-import com.example.facebookapiserver.common.Id;
-import com.example.facebookapiserver.notification.PushSubscribedMessage;
-import com.example.facebookapiserver.notification.Subscription;
-import com.example.facebookapiserver.post.comment.CommentCreatedMessage;
-import com.example.facebookapiserver.user.User;
-import com.example.facebookapiserver.user.UserDto;
-import com.example.facebookapiserver.user.UserJoinedMessage;
+
+import com.example.facebookapiserver.domain.common.Id;
+import com.example.facebookapiserver.message.PushSubscribedMessage;
+import com.example.facebookapiserver.message.CommentCreatedMessage;
+import com.example.facebookapiserver.domain.user.User;
+import com.example.facebookapiserver.controller.user.UserDto;
+import com.example.facebookapiserver.message.UserJoinedMessage;
 import com.example.facebookpushserver.domain.PushMessage;
+import com.example.facebookpushserver.domain.Subscription;
 import com.example.facebookpushserver.service.NotificationService;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.SendTo;

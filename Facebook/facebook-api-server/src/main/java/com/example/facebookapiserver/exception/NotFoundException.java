@@ -1,6 +1,5 @@
 package com.example.facebookapiserver.exception;
-
-import com.example.facebook.utils.MessageUtils;
+import com.example.facebookapiserver.utils.MessageUtils;
 import org.apache.commons.lang3.StringUtils;
 
 public class NotFoundException extends ServiceRuntimeException{

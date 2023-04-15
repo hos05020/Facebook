@@ -1,9 +1,10 @@
 package com.example.facebookapiserver.event;
-import com.example.facebookapiserver.common.Id;
-import com.example.facebookapiserver.post.Post;
-import com.example.facebookapiserver.post.Writer;
-import com.example.facebookapiserver.post.comment.Comment;
-import com.example.facebookapiserver.user.User;
+import com.example.facebookapiserver.domain.common.Id;
+import com.example.facebookapiserver.exception.NotFoundException;
+import com.example.facebookapiserver.domain.post.Post;
+import com.example.facebookapiserver.domain.post.Writer;
+import com.example.facebookapiserver.domain.post.Comment;
+import com.example.facebookapiserver.domain.user.User;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

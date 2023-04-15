@@ -1,6 +1,6 @@
 package com.example.facebookapiserver.exception;
 
-public class ServiceRuntimeException extends RuntimeException{
+public abstract class ServiceRuntimeException extends RuntimeException{
 
 
     private final String messageKey;

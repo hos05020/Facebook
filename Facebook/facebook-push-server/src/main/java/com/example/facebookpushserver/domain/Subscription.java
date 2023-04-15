@@ -3,9 +3,9 @@ package com.example.facebookpushserver.domain;
 import static java.time.LocalDateTime.now;
 import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 
-import com.example.facebookapiserver.common.Id;
-import com.example.facebookapiserver.notification.PushSubscribedMessage;
-import com.example.facebookapiserver.user.User;
+import com.example.facebookapiserver.domain.common.Id;
+import com.example.facebookapiserver.message.PushSubscribedMessage;
+import com.example.facebookapiserver.domain.user.User;
 import java.time.LocalDateTime;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

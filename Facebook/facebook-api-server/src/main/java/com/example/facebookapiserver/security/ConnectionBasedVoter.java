@@ -3,9 +3,9 @@ package com.example.facebookapiserver.security;
 import static com.google.common.base.Preconditions.checkArgument;
 import static org.apache.commons.lang3.ClassUtils.isAssignable;
 
-import com.example.facebook.common.Id;
-import com.example.facebook.user.User;
-import com.example.facebook.user.UserService;
+import com.example.facebookapiserver.domain.common.Id;
+import com.example.facebookapiserver.domain.user.User;
+import com.example.facebookapiserver.service.user.UserService;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;

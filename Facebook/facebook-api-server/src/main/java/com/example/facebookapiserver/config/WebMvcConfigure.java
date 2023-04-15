@@ -1,6 +1,5 @@
 package com.example.facebookapiserver.config;
-
-import com.example.facebook.page.SimpleOffsetPageableHandlerMethodArgumentResolver;
+import com.example.facebookapiserver.config.support.SimpleOffsetPageableHandlerMethodArgumentResolver;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
